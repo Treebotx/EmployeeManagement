@@ -11,7 +11,7 @@ namespace EmployeeManagement.Models
 
         public DateTime DateOfBirth { get; set; }
         public Gender Gender { get; set; }
-        public Department Department { get; set; }
+        public int DepartmentId { get; set; }
         public string PhotoPath { get; set; }
     }
 }
