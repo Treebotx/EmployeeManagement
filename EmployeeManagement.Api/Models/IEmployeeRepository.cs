@@ -11,6 +11,6 @@ namespace EmployeeManagement.Api.Models
         Task<Employee> GetEmployeeByEmail(string email);
         Task<Employee> AddEmployee(Employee employee);
         Task<Employee> UpdateEmployee(Employee employee);
-        Task DeleteEmployee(int employeeId);
+        Task<Employee> DeleteEmployee(int employeeId);
     }
 }
