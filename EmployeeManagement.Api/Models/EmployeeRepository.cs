@@ -1,6 +1,7 @@
 ﻿using EmployeeManagement.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EmployeeManagement.Api.Models
@@ -52,6 +53,24 @@ namespace EmployeeManagement.Api.Models
         public async Task<IEnumerable<Employee>> GetEmployees()
         {
             return await _appDbContext.Employees.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Employee>> Search(string name, Gender? gender)
+        {
+            IQueryable<Employee> query = _appDbContext.Employees;
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(e => e.FirstName.Contains(name)
+                                      || e.LastName.Contains(name));
+            }
+
+            if (gender is not null)
+            {
+                query = query.Where(e => e.Gender == gender);
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task<Employee> UpdateEmployee(Employee employee)
