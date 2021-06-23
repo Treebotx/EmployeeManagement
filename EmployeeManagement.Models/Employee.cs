@@ -12,10 +12,11 @@ namespace EmployeeManagement.Models
         [Required]
         public string LastName { get; set; }
         public string Email { get; set; }
-
         public DateTime DateOfBirth { get; set; }
         public Gender Gender { get; set; }
         public int DepartmentId { get; set; }
         public string PhotoPath { get; set; }
+
+        public Department Department { get; set; }
     }
 }
