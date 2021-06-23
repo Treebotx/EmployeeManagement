@@ -12,11 +12,14 @@ else
         <div class="col-sm-8">
             <div class="card">
                 <div class="card-header">
-                    <h1>@Employee.FirstName @Employee.LastName</h1>
+                    <h1>@Employee.FirstName @Employee.LastName @Coordinates</h1>
                 </div>
 
                 <div class="card-body text-center">
-                    <img class="card-img-top" src="@Employee.PhotoPath" />
+                    <img class="card-img-top" src="@Employee.PhotoPath"
+                         @onmousemove = "@EmployeeImg_Mouse_Move"
+                         @onmouseout =  "@EmployeeImg_Mouse_Out"
+                         />
 
                     <h4>Employee Id : @Employee.EmployeeId</h4>
                     <h4>Email : @Employee.Email</h4>
