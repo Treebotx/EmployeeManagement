@@ -1,22 +1,24 @@
 ﻿using EmployeeManagement.Models;
 using EmployeeManagement.Web.Services;
 using Microsoft.AspNetCore.Components;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EmployeeManagement.Web.Pages
 {
-    public class EmployeeListBase : ComponentBase
+    public class EmployeeDetailsBase : ComponentBase
     {
         [Inject]
         public IEmployeeService _employeeService { get; set; }
 
-        public IEnumerable<Employee> Employees { get; set; }
+        public Employee Employee { get; set; } = new Employee();
+
+        [Parameter]
+        public string Id { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            Employees = (await _employeeService.GetEmployees()).ToList() ;
+            Id = Id ?? "1";
+            Employee = await _employeeService.GetEmployee(int.Parse(Id));
         }
     }
 }
