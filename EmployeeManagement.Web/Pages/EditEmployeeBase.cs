@@ -20,6 +20,9 @@ namespace EmployeeManagement.Web.Pages
         [Inject]
         public IMapper _mapper { get; set; }
 
+        [Inject]
+        public NavigationManager _navigationManager { get; set; }
+
         private Employee Employee { get; set; } = new Employee();
         public EditEmployeeModel EditEmployeeModel { get; set; } = new EditEmployeeModel();
         public List<Department> Departments { get; set; } = new List<Department>();
@@ -33,22 +36,18 @@ namespace EmployeeManagement.Web.Pages
             Departments = (await _departmentService.GetDepartments()).ToList();
 
             _mapper.Map(Employee, EditEmployeeModel);
-
-            //EditEmployeeModel.EmployeeId = Employee.EmployeeId;
-            //EditEmployeeModel.FirstName = Employee.FirstName;
-            //EditEmployeeModel.LastName = Employee.LastName;
-            //EditEmployeeModel.Email = Employee.Email;
-            //EditEmployeeModel.ConfirmEmail = Employee.Email;
-            //EditEmployeeModel.DateOfBirth = Employee.DateOfBirth;
-            //EditEmployeeModel.Gender = Employee.Gender;
-            //EditEmployeeModel.PhotoPath = Employee.PhotoPath;
-            //EditEmployeeModel.DepartmentId = Employee.DepartmentId;
-            //EditEmployeeModel.Department = Employee.Department;
         }
 
-        protected void HandleValidSubmit()
+        protected async Task HandleValidSubmit()
         {
+            _mapper.Map(EditEmployeeModel, Employee);
 
+            var result = await _employeeService.UpdateEmployee(Employee);
+
+            if (result is not null)
+            {
+                _navigationManager.NavigateTo("/");
+            }
         }
     }
 }
